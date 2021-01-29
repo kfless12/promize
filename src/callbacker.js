@@ -22,14 +22,7 @@ const asyncCallbacker = (arg1, arg2, ...args) => {
         if(typeof args[i] != 'function'){
         throw ""}
         }
-
-
-    // function done(data){
-    //         arg2(data, done)
-    //         return data
-    //         }
-    // arg1("str",done)
-    
+   
     let count = -1
     function done(data){
         if(count === -1){

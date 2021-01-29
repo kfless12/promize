@@ -208,7 +208,6 @@ describe('Part 1: Sync/Async Callbacker', () => {
           expect(data).toEqual(2 ** randomNumOfFuncs);
           res();
         });
-        console.log(2 ** randomNumOfFuncs);
 
         asyncCallbacker(...cbs);
       }));
