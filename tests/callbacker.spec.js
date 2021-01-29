@@ -79,8 +79,8 @@ describe('Part 1: Sync/Async Callbacker', () => {
         for (let i = 0; i < randomNumOfFuncs; ++i) {
           cbs.push(a => a * 2);
         }
-
         expect(syncCallbacker(...cbs)).toEqual(2 ** randomNumOfFuncs);
+        
       });
     });
   });
@@ -108,9 +108,7 @@ describe('Part 1: Sync/Async Callbacker', () => {
 
     describe('Functionality', () => {
       it('should call both arguments', () => {
-        const aSpy = jest.fn((data, done) => {
-          done();
-        });
+        const aSpy = jest.fn((data, done) => {done();});
         const bSpy = jest.fn();
 
         asyncCallbacker(aSpy, bSpy);
@@ -210,6 +208,7 @@ describe('Part 1: Sync/Async Callbacker', () => {
           expect(data).toEqual(2 ** randomNumOfFuncs);
           res();
         });
+        console.log(2 ** randomNumOfFuncs);
 
         asyncCallbacker(...cbs);
       }));
