@@ -7,8 +7,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "./node_modules/.bin/jest --verbose",
-    "test:watch": "./node_modules/.bin/jest --watchAll"
+    "test": "D:/FullstackAcademy_work/promize/node_modules/.bin/jest --verbose",
+    "test:watch": "D:/FullstackAcademy_work/promize/node_modules/.bin/jest --watchAll"
   },
   "keywords": [],
   "author": "",
