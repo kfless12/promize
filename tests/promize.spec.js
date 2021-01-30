@@ -88,7 +88,7 @@ describe('Part 3: Promize', () => {
     done();
   });
 
-  xtest('should wait for a promise to resolve in the chain before calling the next .then', done => {
+  test('should wait for a promise to resolve in the chain before calling the next .then', done => {
     const ourFifthPromise = new Promize((r) => {
       setTimeout(() => {
         r('pancakes');
@@ -107,7 +107,7 @@ describe('Part 3: Promize', () => {
       })
   });
 
-  xtest('should call catch if rejected', done => {
+  test('should call catch if rejected', done => {
     const ourSixthPromise = new Promize((res, reject) => {
       setTimeout(() => {
         reject('pancakes');
@@ -121,7 +121,7 @@ describe('Part 3: Promize', () => {
       });
   });
 
-  xtest('should mark downstream promise rejected if something fails', done => {
+  test('should mark downstream promise rejected if something fails', done => {
     const ourSeventhPromise = new Promize((res) => {
       setTimeout(() => {
         res();
@@ -147,7 +147,7 @@ describe('Part 3: Promize', () => {
       });
   });
 
-  xtest('should call downstream catches if a callback errors', done => {
+  test('should call downstream catches if a callback errors', done => {
     const ourFinalPromise = new Promize(() => {
       throw new Error('Oh no!');
     });
