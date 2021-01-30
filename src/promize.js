@@ -3,10 +3,11 @@ const Promize = function(executor){
      if(typeof executor != 'function'){
          throw ""
      }
-     let foo;
+
+    this.catch = function(){};
+    this.resolve;
      
     function resolve(val){
-         foo = val
         return undefined};
      
     function reject(){return undefined};
@@ -15,16 +16,17 @@ const Promize = function(executor){
      this.catch = function(){};
 
     function resolve(val){
-         foo = val
         return undefined};
 
-    this.then = function(func){
-        func(foo)
-        return new Promize(func)};
+    this.then = function(func) {
+      this.resolve = func;
 
-    this.catch = function(){};
+      return new Promize(func);
+    };
+
      
 }
+
 
 
 
