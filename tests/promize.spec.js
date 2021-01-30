@@ -1,6 +1,6 @@
 const Promize = require('../src/promize.js');
 
-xdescribe('Part 3: Promize', () => {
+describe('Part 3: Promize', () => {
   it('should be able to be constructed into a promize instance', () => {
     const ourFirstPromise = new Promize(() => {});
 
@@ -88,7 +88,7 @@ xdescribe('Part 3: Promize', () => {
     done();
   });
 
-  test('should wait for a promise to resolve in the chain before calling the next .then', done => {
+  xtest('should wait for a promise to resolve in the chain before calling the next .then', done => {
     const ourFifthPromise = new Promize((r) => {
       setTimeout(() => {
         r('pancakes');
@@ -107,7 +107,7 @@ xdescribe('Part 3: Promize', () => {
       })
   });
 
-  test('should call catch if rejected', done => {
+  xtest('should call catch if rejected', done => {
     const ourSixthPromise = new Promize((res, reject) => {
       setTimeout(() => {
         reject('pancakes');
@@ -121,7 +121,7 @@ xdescribe('Part 3: Promize', () => {
       });
   });
 
-  test('should mark downstream promise rejected if something fails', done => {
+  xtest('should mark downstream promise rejected if something fails', done => {
     const ourSeventhPromise = new Promize((res) => {
       setTimeout(() => {
         res();
@@ -147,7 +147,7 @@ xdescribe('Part 3: Promize', () => {
       });
   });
 
-  test('should call downstream catches if a callback errors', done => {
+  xtest('should call downstream catches if a callback errors', done => {
     const ourFinalPromise = new Promize(() => {
       throw new Error('Oh no!');
     });
