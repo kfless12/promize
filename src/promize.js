@@ -14,7 +14,6 @@ class Promize{
         this.rejected = false
         this.value = undefined;
         this.err = undefined;
-        this.container = "empty"
 
      
         this.resolve = this.resolve.bind(this);
@@ -87,10 +86,6 @@ class Promize{
 
 }
 
-const prom = new Promize((r)=>{setTimeout(()=>{r('pancakes')}, 1000)})
-const prom2 = new Promize((r)=>{setTimeout(()=>{r('cookies')}, 1000)})
-prom.then((val)=>{console.log(val); return val}).then((val)=>{console.log(val)})
-prom2.then((val)=>{console.log(val)})
 
 
 
