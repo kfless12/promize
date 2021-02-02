@@ -21,7 +21,7 @@ class Promize{
         this.reject = this.reject.bind(this);
         this.then = this.then.bind(this);
         try{
-        executor(this.resolve, this.reject);
+        let stuff = executor(this.resolve, this.reject);
         } catch {}
 
     }
@@ -33,10 +33,6 @@ class Promize{
         this.value = val
         if(!this.resolved){
             for(let i in promises){
-                if(promises[i] instanceof Promize){
-                    promises[i] = null
-                    return undefined
-                }
                 let run = promises[i]
                 try{                
                 val = run(val)
@@ -56,10 +52,6 @@ class Promize{
         this.value = err
         if(!this.rejected){
             for(let i in promises){
-                if(promises[i] instanceof Promize){
-                    promises[i] = null
-                    return undefined
-                }
                 let run = promises[i]
                 try{                
                 val = run(val)
@@ -69,6 +61,7 @@ class Promize{
                 }
                 }catch{}
             }
+            this.rejected = true
         }
         return undefined
     }
@@ -93,6 +86,12 @@ class Promize{
     }
 
 }
+
+const prom = new Promize((r)=>{setTimeout(()=>{r('pancakes')}, 1000)})
+const prom2 = new Promize((r)=>{setTimeout(()=>{r('cookies')}, 1000)})
+prom.then((val)=>{console.log(val); return val}).then((val)=>{console.log(val)})
+prom2.then((val)=>{console.log(val)})
+
 
 
 
