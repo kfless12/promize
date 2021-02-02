@@ -1,10 +1,17 @@
+const promises = []
+
+//The class runs like a semi true promise function. The .then function will
+/*create a list which will then run upon the resolution of the first promises.
+when another promise is created in the chain the list will break and wait to be
+started again buy the execution of that specific promise*/
+
 class Promize{
     constructor(executor){
         if(typeof executor != 'function'){
             throw ""
         };
-        this.ispromise = true;
-        this.exec = executor
+        this.resolved = false
+        this.rejected = false
         this.value = undefined;
         this.err = undefined;
         this.container = "empty"
@@ -18,67 +25,74 @@ class Promize{
         } catch {}
 
     }
-    //the value needs to be pulled out of resolve and saved then the .then will
-    //run to create a container and finally we can run the func with the value passed in
-
-
-    //in function test spec resolve replaces r and is not called until timeout 
-    //is completed meaing value isnt passed until after 100ms
 
     resolve(val){
-        this.value = val
-
-        if(this.container != "empty"){
-            this.container(this.value)
-           
+        if(this.rejected){
+            return undefined
         }
+        this.value = val
+        if(!this.resolved){
+            for(let i in promises){
+                if(promises[i] instanceof Promize){
+                    promises[i] = null
+                    return undefined
+                }
+                let run = promises[i]
+                try{                
+                val = run(val)
+                promises[i] = null
+                if(val instanceof Promize){
+                    break
+                }
+                }catch{}
+            }
+            this.resolved = true
+        }
+
         return undefined
     }
     //same process as resolve
     reject(err){
-        this.err = err;
-        if(this.container != 'empty'){
-            this.container(this.err)
+        this.value = err
+        if(!this.rejected){
+            for(let i in promises){
+                if(promises[i] instanceof Promize){
+                    promises[i] = null
+                    return undefined
+                }
+                let run = promises[i]
+                try{                
+                val = run(val)
+                promises[i] = null
+                if(val instanceof Promize){
+                    break
+                }
+                }catch{}
+            }
         }
         return undefined
     }
-
+    
     then(func) {
-       //create a container to hold the function then pass to resolve
-       //i need to check it the passed in value is already a promise. if
-       //it is we need to override the .then to push through the promise straight
-       //to the resolve becuase we already reformatted it
-       if(this.checkfunc(func)){
-           
-           return func()
-       }
-       this.container = func
-
-		return  new Promize(this.exec);
-    }
-    catch(func){
-        if(this.checkfunc(func)){
-           
-            return func()
+        if(this.resolved){
+            func(this.value)
+        } else {
+            promises.push(func)
         }
-        this.container = func
- 
-         return  new Promize(this.exec);
+        return  new Promize(()=>{});
     }
 
-    checkfunc(val){
-        try{
-        if(val().ispromise){
-            return true
-        } 
-    } catch{ return false}
+    catch(func){
+        this.rejected = true;
+        if(this.rejected){
+            func(this.err)
+        } else {
+            promises.push(func)
+        }
+        return  new Promize(()=>{});
     }
+
 }
-
-
-
-
-
 
 
 
